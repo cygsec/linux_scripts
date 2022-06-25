@@ -1,0 +1,4 @@
+#/bin/sh
+# this script will will delete files older than 2 days located in /var/cache/apt/archives and dumps the output to /var/log/cleanup.log
+date >> /var/log/cleanup.log
+find /var/cache/apt/archives -mtime +2 -exec rm {} \; >> /var/log/cleanup.log
