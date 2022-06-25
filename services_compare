@@ -1,0 +1,27 @@
+#!/bin/bash
+folder="/var/log/services/"
+date1=$(date '+%Y-%m-%d')
+# echo $folder
+# echo $date1
+today_services="$folder$date1"
+# echo $combined_1
+date2=$(date -d "1 day ago" '+%Y-%m-%d')
+# echo "This is date2"
+# echo $date2
+yesterday_services="$folder$date2"
+compare="compare-"
+output="$folder$compare$date1"
+#echo $output
+# echo $combined_2
+#file2=$(/var/log/services/date -d "1 day ago" '+%Y%m%d')
+# echo "THIS IS A TEST" > $output
+sudo echo "-----------------------------------------------------------------------------------" >> $output
+sudo echo "" >> $output
+sudo echo "Service Snapshots for compares from 6:30AM PST" >> $output
+sudo echo "NOTE this is only generating differences between the 2 files if there are any" >> $output
+sudo echo "" >> $output
+sudo echo "-----------------------------------------------------------------------------------" >> $output
+sudo echo "running today " $date1 >> $output
+sudo echo "                		                      "$date2 " running yesterday" >> $output
+sudo echo "-----------------------------------------------------------------------------------" >> $output
+sudo diff $today_services $yesterday_services >> $output
