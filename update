@@ -1,0 +1,9 @@
+# this is a script designed by Shane Ynclan designed to be run on a daily basis to ensure that this workstation is up to date
+#!/bin/sh
+clear
+echo "Hello, $USER ...updating required packages..."
+# echo -e "Update performed on:" > /var/log/update/apt_update.log >> /var/log/update/apt_update.log
+date >> /var/log/update/update.log
+sudo apt-get update -y >> /var/log/update/update.log
+sudo apt-get upgrade -y >> /var/log/update/update.log
+sudo apt-get dist-upgrade -y >> /var/log/update/update.log
