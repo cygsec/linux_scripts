@@ -1,0 +1,2 @@
+#!/bin/bash
+systemctl | grep running | sort -n > /var/log/services/"`date +"%Y-%m-%d"`"
