@@ -31,24 +31,33 @@ Please Select:
 1b. display disk space
 1c. display home space utilization
 1d. list files open to the internet (lsof -ni)
-1e. display current shell
+1e. display current used shell
 1f. show linux version
+1g. show running services
+1h. show installed packages (includes versions) "q" to quit
+1j. show currently running processes on machine
 - - - - - - - - - - - - - - - - -
 2 - PACKAGE MANAGEMENT
 - - - - - - - - - - - - - - - - -
 2a.
-
+- - - - - - - - - - - - - - - - -
+4 - SERVICES
+- - - - - - - - - - - - - - - - -
+- - - - - - - - - - - - - - - - -
+5 - NETWORKING
+- - - - - - - - - - - - - - - - -
+5a. show current dns servers
+5b. netcat connectivity test
+5c. tcpdump - traffic check
 
 - - - - - - - - - - - - - - - - -
-4 - PROCESSES
+6 - LOGS
 - - - - - - - - - - - - - - - - -
-
-
-4. item here
-5. item here
-6. netcat - network connectivity
-7. tcpdump (promptable for port test)
-8. item here
+6a. list any files that have /var/auth.log open
+6b. check auth.log for errors
+- - - - - - - - - - - - - - - - -
+7 - DOCKER
+- - - - - - - - - - - - - - - - -
 - - - - - - - - - - - - - - - - -
 9 - UFW aka uncomplicated firewall
 - - - - - - - - - - - - - - - - -
@@ -91,8 +100,17 @@ case $selection in
 
 1f) cat /etc/*release
 	;;
-4)
+1g) sudo systemctl | grep running
 	;;
+1h) dpkg-query -l
+	;;
+1j) ps -aux | more
+	;;
+5a) cat /etc/resolv.conf
+	;;
+6b) sudo grep error /var/log/auth.log
+	;;
+
 9) sudo ufw show added
 	;;
 
