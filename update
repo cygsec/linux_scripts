@@ -1,4 +1,5 @@
 # this is a script designed by Shane Ynclan designed to be run on a daily basis to ensure that this workstation is up to date
+# this should be scheduled via cron as a script and run on a needed basis
 #!/bin/sh
 clear
 echo "Hello, $USER ...updating required packages..."
