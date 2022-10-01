@@ -1,0 +1,110 @@
+# this file contains a selectable menu for all standard tasks
+# you may pull this via a wget <URL> to the server you are working on and execute this script to perform tasks
+
+#!/bin/bash
+
+# clear the screen so we have clean start
+
+clear
+
+# tput_menu: a menu driven system information program
+
+BG_BLUE="$(tput setab 4)"
+BG_CYAN="$(tput setab 6)"
+BG_BLACK="$(tput setab 0)"
+FG_GREEN="$(tput setaf 2)"
+FG_WHITE="$(tput setaf 7)"
+
+# Save screen
+tput smcup
+
+# Display menu until selection == 0
+while [[ $REPLY != 0 ]]; do
+ echo -n ${BG_CYAN}${FG_WHITE}
+ clear
+ cat <<- _EOF_
+Please Select:
+- - - - - - - - - - - - - - - - -
+1 - SYSTEM INFORMATION
+- - - - - - - - - - - - - - - - -
+1a. display hostname and uptime
+1b. display disk space
+1c. display home space utilization
+1d. list files open to the internet (lsof -ni)
+1e. display current shell
+1f. show linux version
+- - - - - - - - - - - - - - - - -
+2 - PACKAGE MANAGEMENT
+- - - - - - - - - - - - - - - - -
+2a.
+
+
+- - - - - - - - - - - - - - - - -
+4 - PROCESSES
+- - - - - - - - - - - - - - - - -
+
+
+4. item here
+5. item here
+6. netcat - network connectivity
+7. tcpdump (promptable for port test)
+8. item here
+- - - - - - - - - - - - - - - - -
+9 - UFW aka uncomplicated firewall
+- - - - - - - - - - - - - - - - -
+9a. show ufw rules
+9b. add ufw rule
+9c. tail ufw logs for troubleshooting
+-
+- - - - - - - - - - - - - - - - -
+q. Quit
+
+_EOF_
+
+read -p "Enter selection > " selection
+
+# Clear area beneath menu
+tput cup 10 0
+echo -n ${BG_BLACK}${FG_GREEN}
+tput ed
+tput cup 11 0
+
+# Act on selection
+case $selection in
+1a)  echo "Hostname: $HOSTNAME"
+            uptime
+         ;;
+1b)  df -h /
+         ;;
+1c)  if [[ $(id -u) -eq 0 ]]; then
+              echo "Home Space Utilization (All Users)"
+              du -sh /home/* 2> /dev/null
+            else
+              echo "Home Space Utilization ($USER)"
+              du -s $HOME/* 2> /dev/null | sort -nr
+            fi
+	;;
+1d) sudo lsof -ni
+	;;
+1e) echo $SHELL
+	;;
+
+1f) cat /etc/*release
+	;;
+4)
+	;;
+9) sudo ufw show added
+	;;
+
+q)  break
+        ;;
+*)  echo "Invalid entry."
+        ;;
+      esac
+      printf "\n\nPress any key to continue."
+      read -n 1
+    done
+
+# Restore screen
+tput rmcup
+echo "Program terminated."
